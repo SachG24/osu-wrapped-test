@@ -26,13 +26,14 @@ export default async function Dashboard() {
   const userData = await getUserData();
 
   return (
-    <div 
-      className="min-h-screen p-8"
-      style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-        backgroundAttachment: 'fixed',
-      }}
-    >
+  <div 
+  className="min-h-screen p-8"
+  style={{
+    backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url(https://assets.ppy.sh/contests/269/winners/Kleinne%20Lui.png)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center top',
+  }}
+>
       <div className="max-w-5xl mx-auto">
         {/* Profile Card */}
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 mb-8">
@@ -48,7 +49,7 @@ export default async function Dashboard() {
                 Global Rank #{userData.statistics?.global_rank?.toLocaleString() || 'Unranked'}
               </p>
               <p className="text-lg text-gray-500 mt-1">
-                {userData.country?.name || userData.country_code} 
+                {userData.country?.name || userData.country_code} Player
               </p>
             </div>
           </div>
@@ -98,11 +99,11 @@ export default async function Dashboard() {
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 text-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Ready to see your year?</h2>
           <p className="text-xl text-gray-600 mb-6">Check out your personalized 2025 recap!</p>
-          <a
-            href="/wrapped"
-            className="inline-block bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white px-10 py-5 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-105 transition-all"
-          >
-            See Your 2025 Wrapped 
+          
+            <a href="/wrapped"
+            className="inline-block bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white px-10 py-5 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-105 transition-all">
+          
+            See Your 2025 Wrapped! 
           </a>
         </div>
       </div>
