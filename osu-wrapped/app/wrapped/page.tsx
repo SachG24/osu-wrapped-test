@@ -67,16 +67,20 @@ function calculate2025Stats(userData: any, bestPlays: any[]) {
   );
 
   // Find most active month
-  let mostActiveMonth = null;
-  if (playcounts2025.length > 0) {
-    const sorted = [...playcounts2025].sort((a: any, b: any) => b.count - a.count);
-    const topMonth = sorted[0];
-    const monthName = new Date(topMonth.start_date).toLocaleString('default', { month: 'long' });
-    mostActiveMonth = {
-      month: monthName,
-      plays: topMonth.count,
-    };
-  }
+ // Find most active month
+let mostActiveMonth = null;
+if (playcounts2025.length > 0) {
+  const sorted = [...playcounts2025].sort((a: any, b: any) => b.count - a.count);
+  const topMonth = sorted[0];
+  // Add one day to the start_date to ensure we're in the correct month
+  const date = new Date(topMonth.start_date);
+  date.setDate(date.getDate() + 1); // Offset by 1 day to avoid timezone issues
+  const monthName = date.toLocaleString('default', { month: 'long' });
+  mostActiveMonth = {
+    month: monthName,
+    plays: topMonth.count,
+  };
+}
 
   // Get top 5 plays
   const top5Plays = bestPlays.slice(0, 5).map((play: any) => ({
@@ -288,10 +292,10 @@ export default async function Wrapped() {
           </div>
         )}
 
-        {/* Shareable Summary Card */}
+       {/* Shareable Summary Card */}
 <div className="bg-white rounded-2xl shadow-2xl overflow-hidden" id="shareable-card">
   {/* Header with gradient */}
-  <div className="bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 p-10 text-white text-center">
+  <div className="p-10 text-white text-center" style={{ background: 'linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #3b82f6 100%)' }}>
     <img 
       src={stats.avatar_url} 
       alt={stats.username}
@@ -308,19 +312,19 @@ export default async function Wrapped() {
     <div className="grid grid-cols-2 gap-6 mb-10">
       <div className="text-center">
         <p className="text-gray-600 text-lg mb-1">Total Plays</p>
-        <p className="text-5xl font-bold text-purple-600">{stats.total_plays.toLocaleString()}</p>
+        <p className="text-5xl font-bold" style={{ color: '#9333ea' }}>{stats.total_plays.toLocaleString()}</p>
       </div>
       <div className="text-center">
         <p className="text-gray-600 text-lg mb-1">New Top Scores</p>
-        <p className="text-5xl font-bold text-pink-600">{stats.best_plays_count}</p>
+        <p className="text-5xl font-bold" style={{ color: '#ec4899' }}>{stats.best_plays_count}</p>
       </div>
     </div>
 
     {/* Most Active Month */}
     {stats.most_active_month && (
-      <div className="mb-10 bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border-2 border-purple-200">
+      <div className="mb-10 p-6 rounded-xl border-2" style={{ background: 'linear-gradient(to right, #faf5ff, #fdf2f8)', borderColor: '#e9d5ff' }}>
         <p className="text-gray-700 text-lg font-medium mb-2">Most Active Month</p>
-        <p className="text-4xl font-bold text-purple-600">{stats.most_active_month.month}</p>
+        <p className="text-4xl font-bold" style={{ color: '#9333ea' }}>{stats.most_active_month.month}</p>
         <p className="text-xl text-gray-600 mt-1">{stats.most_active_month.plays.toLocaleString()} plays</p>
       </div>
     )}
@@ -335,7 +339,7 @@ export default async function Wrapped() {
           <div className="space-y-2">
             {stats.top_5_artists.slice(0, 5).map((artist: any, index: number) => (
               <div key={index} className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-pink-600 w-8">{index + 1}</span>
+                <span className="text-2xl font-bold w-8" style={{ color: '#ec4899' }}>{index + 1}</span>
                 <div className="flex-grow">
                   <p className="text-lg font-semibold text-gray-800 truncate">{artist.artist}</p>
                 </div>
@@ -352,7 +356,7 @@ export default async function Wrapped() {
           <div className="space-y-2">
             {stats.top_5_mappers.slice(0, 5).map((mapper: any, index: number) => (
               <div key={index} className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-blue-600 w-8">{index + 1}</span>
+                <span className="text-2xl font-bold w-8" style={{ color: '#3b82f6' }}>{index + 1}</span>
                 <div className="flex-grow">
                   <p className="text-lg font-semibold text-gray-800 truncate">{mapper.mapper}</p>
                 </div>
@@ -370,7 +374,7 @@ export default async function Wrapped() {
         <div className="space-y-2">
           {stats.top_5_plays.map((play: any, index: number) => (
             <div key={index} className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-purple-600 w-8">{index + 1}</span>
+              <span className="text-2xl font-bold w-8" style={{ color: '#9333ea' }}>{index + 1}</span>
               <div className="flex-grow">
                 <p className="text-lg font-semibold text-gray-800 truncate">{play.title}</p>
                 <p className="text-sm text-gray-600 truncate">{play.artist}</p>
@@ -385,19 +389,23 @@ export default async function Wrapped() {
     <div className="grid grid-cols-2 gap-6 pt-6 border-t-2 border-gray-200">
       <div className="text-center">
         <p className="text-gray-600 text-sm mb-1">Current Rank</p>
-        <p className="text-3xl font-bold text-blue-600">#{stats.current_rank?.toLocaleString()}</p>
+        <p className="text-3xl font-bold" style={{ color: '#3b82f6' }}>#{stats.current_rank?.toLocaleString()}</p>
       </div>
       <div className="text-center">
         <p className="text-gray-600 text-sm mb-1">Total PP</p>
-        <p className="text-3xl font-bold text-indigo-600">{Math.round(stats.current_pp || 0).toLocaleString()}</p>
+        <p className="text-3xl font-bold" style={{ color: '#6366f1' }}>{Math.round(stats.current_pp || 0).toLocaleString()}</p>
       </div>
     </div>
 
-    {/* Footer must change to actual site name */}
+    {/* Footer */}
     <div className="text-center mt-8 pt-6 border-t-2 border-gray-200">
-      <p className="text-sm text-gray-500">osu-wrapped.com</p> 
+      <p className="text-sm text-gray-500">osu-wrapped.com</p>
     </div>
   </div>
+</div>
+{/* Share Button */}
+<div className="text-center">
+  <ShareButton />
 </div>
       
 

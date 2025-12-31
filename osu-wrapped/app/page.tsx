@@ -19,10 +19,9 @@ export default function Home() {
           Wrapped
         </h1>
         <p className="text-2xl text-white mb-10 drop-shadow-lg font-medium">
-          See your year in rhythm gaming, just like Spotify Wrapped
+          See your year in circle clicking!
         </p>
-        
-          <a href="/api/auth/login"
+        <a href="/api/auth/login"
           className="bg-white/95 backdrop-blur-sm text-pink-600 px-12 py-5 rounded-full text-2xl font-bold hover:bg-white hover:scale-105 transition-all shadow-2xl border-2 border-white">
         
           Login with osu!
