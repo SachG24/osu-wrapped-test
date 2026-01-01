@@ -67,20 +67,19 @@ function calculate2025Stats(userData: any, bestPlays: any[]) {
   );
 
   // Find most active month
- // Find most active month
-let mostActiveMonth = null;
-if (playcounts2025.length > 0) {
-  const sorted = [...playcounts2025].sort((a: any, b: any) => b.count - a.count);
-  const topMonth = sorted[0];
-  // Add one day to the start_date to ensure we're in the correct month
-  const date = new Date(topMonth.start_date);
-  date.setDate(date.getDate() + 1); // Offset by 1 day to avoid timezone issues
-  const monthName = date.toLocaleString('default', { month: 'long' });
-  mostActiveMonth = {
-    month: monthName,
-    plays: topMonth.count,
-  };
-}
+  let mostActiveMonth = null;
+  if (playcounts2025.length > 0) {
+    const sorted = [...playcounts2025].sort((a: any, b: any) => b.count - a.count);
+    const topMonth = sorted[0];
+    // Add one day to the start_date to ensure we're in the correct month
+    const date = new Date(topMonth.start_date);
+    date.setDate(date.getDate() + 1); // Offset by 1 day to avoid timezone issues
+    const monthName = date.toLocaleString('default', { month: 'long' });
+    mostActiveMonth = {
+      month: monthName,
+      plays: topMonth.count,
+    };
+  }
 
   // Get top 5 plays
   const top5Plays = bestPlays.slice(0, 5).map((play: any) => ({
@@ -154,19 +153,19 @@ export default async function Wrapped() {
   const stats = await getWrappedStats();
 
   return (
-<div 
-  className="min-h-screen p-8 relative"
-  style={{
-    backgroundImage: stats.background_image 
-      ? `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url(${stats.background_image})`
-      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'repeat-y',
-    backgroundAttachment: 'fixed',
-    backgroundColor: '#1a1a2e',
-  }}
->
+    <div 
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: stats.background_image 
+          ? `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url(${stats.background_image})`
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'repeat-y',
+        backgroundAttachment: 'fixed',
+        backgroundColor: '#1a1a2e',
+      }}
+    >
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}
@@ -292,56 +291,111 @@ export default async function Wrapped() {
           </div>
         )}
 
-       {/* Shareable Summary Card */}
-<div className="bg-white rounded-2xl shadow-2xl overflow-hidden" id="shareable-card">
+        {/* Shareable Summary Card - Pure inline styles, no Tailwind */}
+<div 
+  id="shareable-card"
+  style={{
+    background: '#ffffff',
+    borderRadius: '16px',
+    overflow: 'hidden',
+    maxWidth: '800px',
+    margin: '0 auto',
+  }}
+>
   {/* Header with gradient */}
-  <div className="p-10 text-white text-center" style={{ background: 'linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #3b82f6 100%)' }}>
+  <div style={{
+    background: 'linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #3b82f6 100%)',
+    padding: '40px',
+    textAlign: 'center',
+    color: '#ffffff',
+  }}>
     <img 
-      src={stats.avatar_url} 
+      src={`/api/proxy-image?url=${encodeURIComponent(stats.avatar_url)}`}
       alt={stats.username}
-      className="w-32 h-32 rounded-full border-4 border-white shadow-xl mx-auto mb-4"
+      style={{
+        width: '128px',
+        height: '128px',
+        borderRadius: '50%',
+        border: '4px solid #ffffff',
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+        margin: '0 auto 16px',
+        display: 'block',
+      }}
     />
-    <h2 className="text-5xl font-bold mb-2">{stats.username}</h2>
-    <p className="text-2xl opacity-90">2025 osu! Wrapped</p>
+    <h2 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '8px', margin: '0' }}>
+      {stats.username}
+    </h2>
+    <p style={{ fontSize: '24px', opacity: 0.9, margin: '8px 0 0 0' }}>
+      2025 osu! Wrapped
+    </p>
   </div>
 
-  {/* Content Grid */}
-  <div className="p-10 bg-white">
+  {/* Content */}
+  <div style={{ padding: '40px', background: '#ffffff' }}>
     
     {/* Key Stats Row */}
-    <div className="grid grid-cols-2 gap-6 mb-10">
-      <div className="text-center">
-        <p className="text-gray-600 text-lg mb-1">Total Plays</p>
-        <p className="text-5xl font-bold" style={{ color: '#9333ea' }}>{stats.total_plays.toLocaleString()}</p>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '40px' }}>
+      <div style={{ textAlign: 'center' }}>
+        <p style={{ color: '#4b5563', fontSize: '18px', marginBottom: '4px' }}>Total Plays</p>
+        <p style={{ fontSize: '48px', fontWeight: 'bold', color: '#9333ea', margin: '0' }}>
+          {stats.total_plays.toLocaleString()}
+        </p>
       </div>
-      <div className="text-center">
-        <p className="text-gray-600 text-lg mb-1">New Top Scores</p>
-        <p className="text-5xl font-bold" style={{ color: '#ec4899' }}>{stats.best_plays_count}</p>
+      <div style={{ textAlign: 'center' }}>
+        <p style={{ color: '#4b5563', fontSize: '18px', marginBottom: '4px' }}>New Top Scores</p>
+        <p style={{ fontSize: '48px', fontWeight: 'bold', color: '#ec4899', margin: '0' }}>
+          {stats.best_plays_count}
+        </p>
       </div>
     </div>
 
     {/* Most Active Month */}
     {stats.most_active_month && (
-      <div className="mb-10 p-6 rounded-xl border-2" style={{ background: 'linear-gradient(to right, #faf5ff, #fdf2f8)', borderColor: '#e9d5ff' }}>
-        <p className="text-gray-700 text-lg font-medium mb-2">Most Active Month</p>
-        <p className="text-4xl font-bold" style={{ color: '#9333ea' }}>{stats.most_active_month.month}</p>
-        <p className="text-xl text-gray-600 mt-1">{stats.most_active_month.plays.toLocaleString()} plays</p>
+      <div style={{
+        marginBottom: '40px',
+        background: 'linear-gradient(to right, #faf5ff, #fdf2f8)',
+        padding: '24px',
+        borderRadius: '12px',
+      }}>
+        <p style={{ color: '#374151', fontSize: '18px', fontWeight: '500', marginBottom: '8px' }}>
+          Most Active Month
+        </p>
+        <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#9333ea', margin: '0' }}>
+          {stats.most_active_month.month}
+        </p>
+        <p style={{ fontSize: '20px', color: '#4b5563', marginTop: '4px' }}>
+          {stats.most_active_month.plays.toLocaleString()} plays
+        </p>
       </div>
     )}
 
-    {/* Two Column Layout for Lists */}
-    <div className="grid grid-cols-2 gap-8 mb-10">
+    {/* Two Column Layout */}
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '40px' }}>
       
       {/* Top Artists */}
       {stats.top_5_artists.length > 0 && (
         <div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Top Artists</h3>
-          <div className="space-y-2">
+          <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+            Top Artists
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {stats.top_5_artists.slice(0, 5).map((artist: any, index: number) => (
-              <div key={index} className="flex items-center gap-3">
-                <span className="text-2xl font-bold w-8" style={{ color: '#ec4899' }}>{index + 1}</span>
-                <div className="flex-grow">
-                  <p className="text-lg font-semibold text-gray-800 truncate">{artist.artist}</p>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#ec4899', width: '32px' }}>
+                  {index + 1}
+                </span>
+                <div style={{ flexGrow: 1 }}>
+                  <p style={{
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    color: '#1f2937',
+                    margin: '0',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {artist.artist}
+                  </p>
                 </div>
               </div>
             ))}
@@ -352,13 +406,27 @@ export default async function Wrapped() {
       {/* Top Mappers */}
       {stats.top_5_mappers.length > 0 && (
         <div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Top Mappers</h3>
-          <div className="space-y-2">
+          <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+            Top Mappers
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {stats.top_5_mappers.slice(0, 5).map((mapper: any, index: number) => (
-              <div key={index} className="flex items-center gap-3">
-                <span className="text-2xl font-bold w-8" style={{ color: '#3b82f6' }}>{index + 1}</span>
-                <div className="flex-grow">
-                  <p className="text-lg font-semibold text-gray-800 truncate">{mapper.mapper}</p>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#3b82f6', width: '32px' }}>
+                  {index + 1}
+                </span>
+                <div style={{ flexGrow: 1 }}>
+                  <p style={{
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    color: '#1f2937',
+                    margin: '0',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {mapper.mapper}
+                  </p>
                 </div>
               </div>
             ))}
@@ -369,15 +437,38 @@ export default async function Wrapped() {
 
     {/* Top 5 Songs */}
     {stats.top_5_plays.length > 0 && (
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">Top Songs</h3>
-        <div className="space-y-2">
+      <div style={{ marginBottom: '32px' }}>
+        <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+          Top Songs
+        </h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {stats.top_5_plays.map((play: any, index: number) => (
-            <div key={index} className="flex items-center gap-3">
-              <span className="text-2xl font-bold w-8" style={{ color: '#9333ea' }}>{index + 1}</span>
-              <div className="flex-grow">
-                <p className="text-lg font-semibold text-gray-800 truncate">{play.title}</p>
-                <p className="text-sm text-gray-600 truncate">{play.artist}</p>
+            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#9333ea', width: '32px' }}>
+                {index + 1}
+              </span>
+              <div style={{ flexGrow: 1 }}>
+                <p style={{
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  color: '#1f2937',
+                  margin: '0',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {play.title}
+                </p>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#4b5563',
+                  margin: '0',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {play.artist}
+                </p>
               </div>
             </div>
           ))}
@@ -386,28 +477,41 @@ export default async function Wrapped() {
     )}
 
     {/* Bottom Stats */}
-    <div className="grid grid-cols-2 gap-6 pt-6 border-t-2 border-gray-200">
-      <div className="text-center">
-        <p className="text-gray-600 text-sm mb-1">Current Rank</p>
-        <p className="text-3xl font-bold" style={{ color: '#3b82f6' }}>#{stats.current_rank?.toLocaleString()}</p>
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '24px',
+      paddingTop: '24px',
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <p style={{ color: '#4b5563', fontSize: '14px', marginBottom: '4px' }}>Current Rank</p>
+        <p style={{ fontSize: '30px', fontWeight: 'bold', color: '#3b82f6', margin: '0' }}>
+          #{stats.current_rank?.toLocaleString()}
+        </p>
       </div>
-      <div className="text-center">
-        <p className="text-gray-600 text-sm mb-1">Total PP</p>
-        <p className="text-3xl font-bold" style={{ color: '#6366f1' }}>{Math.round(stats.current_pp || 0).toLocaleString()}</p>
+      <div style={{ textAlign: 'center' }}>
+        <p style={{ color: '#4b5563', fontSize: '14px', marginBottom: '4px' }}>Total PP</p>
+        <p style={{ fontSize: '30px', fontWeight: 'bold', color: '#6366f1', margin: '0' }}>
+          {Math.round(stats.current_pp || 0).toLocaleString()}
+        </p>
       </div>
     </div>
 
     {/* Footer */}
-    <div className="text-center mt-8 pt-6 border-t-2 border-gray-200">
-      <p className="text-sm text-gray-500">osu-wrapped.com</p>
+    <div style={{
+      textAlign: 'center',
+      marginTop: '32px',
+      paddingTop: '24px',
+    }}>
+      <p style={{ fontSize: '14px', color: '#6b7280', margin: '0' }}>osu-wrapped.com</p>
     </div>
   </div>
 </div>
-{/* Share Button */}
-<div className="text-center">
-  <ShareButton />
-</div>
-      
+
+        {/* Share Button */}
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <ShareButton />
+        </div>
 
         {/* Back to Dashboard */}
         <div className="text-center pb-8">
