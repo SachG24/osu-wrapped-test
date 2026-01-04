@@ -291,21 +291,21 @@ export default async function Wrapped() {
           </div>
         )}
 
-        {/* Shareable Summary Card - Pure inline styles, no Tailwind */}
+  {/* Shareable Summary Card - Pure inline styles, no Tailwind */}
 <div 
   id="shareable-card"
   style={{
     background: '#ffffff',
     borderRadius: '16px',
-    overflow: 'hidden',
-    maxWidth: '800px',
+    maxWidth: '896px', // Match max-w-4xl
     margin: '0 auto',
+    padding: '0',
   }}
 >
   {/* Header with gradient */}
   <div style={{
     background: 'linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #3b82f6 100%)',
-    padding: '40px',
+    padding: '25px 40px 30px 40px',
     textAlign: 'center',
     color: '#ffffff',
   }}>
@@ -313,37 +313,53 @@ export default async function Wrapped() {
       src={`/api/proxy-image?url=${encodeURIComponent(stats.avatar_url)}`}
       alt={stats.username}
       style={{
-        width: '128px',
-        height: '128px',
+        width: '90px',
+        height: '90px',
         borderRadius: '50%',
         border: '4px solid #ffffff',
         boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
-        margin: '0 auto 16px',
+        margin: '0 auto 10px',
         display: 'block',
       }}
     />
-    <h2 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '8px', margin: '0' }}>
+    <h2 style={{ 
+      fontSize: '36px',
+      fontWeight: 'bold', 
+      margin: '0', 
+      padding: '5px 0 10px 0',
+      lineHeight: '1.3' 
+    }}>
       {stats.username}
     </h2>
-    <p style={{ fontSize: '24px', opacity: 0.9, margin: '8px 0 0 0' }}>
+    <p style={{ 
+      fontSize: '18px',
+      opacity: 0.9, 
+      margin: '0', 
+      padding: '3px 0 8px 0',
+      lineHeight: '1.5' 
+    }}>
       2025 osu! Wrapped
     </p>
   </div>
 
   {/* Content */}
-  <div style={{ padding: '40px', background: '#ffffff' }}>
+  <div style={{ padding: '20px 40px 25px 40px', background: '#ffffff' }}>
     
     {/* Key Stats Row */}
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '40px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
       <div style={{ textAlign: 'center' }}>
-        <p style={{ color: '#4b5563', fontSize: '18px', marginBottom: '4px' }}>Total Plays</p>
-        <p style={{ fontSize: '48px', fontWeight: 'bold', color: '#9333ea', margin: '0' }}>
+        <p style={{ color: '#4b5563', fontSize: '14px', marginBottom: '2px', padding: '2px 0 6px 0', lineHeight: '1.5' }}>
+          Total Plays
+        </p>
+        <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#9333ea', margin: '0', padding: '3px 0 12px 0', lineHeight: '1.2' }}>
           {stats.total_plays.toLocaleString()}
         </p>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <p style={{ color: '#4b5563', fontSize: '18px', marginBottom: '4px' }}>New Top Scores</p>
-        <p style={{ fontSize: '48px', fontWeight: 'bold', color: '#ec4899', margin: '0' }}>
+        <p style={{ color: '#4b5563', fontSize: '14px', marginBottom: '2px', padding: '2px 0 6px 0', lineHeight: '1.5' }}>
+          New Top Scores
+        </p>
+        <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#ec4899', margin: '0', padding: '3px 0 12px 0', lineHeight: '1.2' }}>
           {stats.best_plays_count}
         </p>
       </div>
@@ -352,47 +368,49 @@ export default async function Wrapped() {
     {/* Most Active Month */}
     {stats.most_active_month && (
       <div style={{
-        marginBottom: '40px',
+        marginBottom: '20px',
         background: 'linear-gradient(to right, #faf5ff, #fdf2f8)',
-        padding: '24px',
+        padding: '15px 20px 18px 20px',
         borderRadius: '12px',
       }}>
-        <p style={{ color: '#374151', fontSize: '18px', fontWeight: '500', marginBottom: '8px' }}>
+        <p style={{ color: '#374151', fontSize: '14px', fontWeight: '500', marginBottom: '4px', padding: '2px 0 6px 0', lineHeight: '1.5' }}>
           Most Active Month
         </p>
-        <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#9333ea', margin: '0' }}>
+        <p style={{ fontSize: '28px', fontWeight: 'bold', color: '#9333ea', margin: '0', padding: '3px 0 10px 0', lineHeight: '1.2' }}>
           {stats.most_active_month.month}
         </p>
-        <p style={{ fontSize: '20px', color: '#4b5563', marginTop: '4px' }}>
+        <p style={{ fontSize: '16px', color: '#4b5563', marginTop: '2px', padding: '2px 0 8px 0', lineHeight: '1.5' }}>
           {stats.most_active_month.plays.toLocaleString()} plays
         </p>
       </div>
     )}
 
     {/* Two Column Layout */}
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '40px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '25px', marginBottom: '20px' }}>
       
       {/* Top Artists */}
       {stats.top_5_artists.length > 0 && (
         <div>
-          <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#1f2937', marginBottom: '10px', padding: '3px 0 8px 0', lineHeight: '1.4' }}>
             Top Artists
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {stats.top_5_artists.slice(0, 5).map((artist: any, index: number) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#ec4899', width: '32px' }}>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#ec4899', width: '24px', padding: '2px 0 8px 0', lineHeight: '1.3' }}>
                   {index + 1}
                 </span>
                 <div style={{ flexGrow: 1 }}>
                   <p style={{
-                    fontSize: '18px',
+                    fontSize: '15px',
                     fontWeight: '600',
                     color: '#1f2937',
                     margin: '0',
+                    padding: '2px 0 8px 0',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
+                    lineHeight: '1.5',
                   }}>
                     {artist.artist}
                   </p>
@@ -406,24 +424,26 @@ export default async function Wrapped() {
       {/* Top Mappers */}
       {stats.top_5_mappers.length > 0 && (
         <div>
-          <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#1f2937', marginBottom: '10px', padding: '3px 0 8px 0', lineHeight: '1.4' }}>
             Top Mappers
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {stats.top_5_mappers.slice(0, 5).map((mapper: any, index: number) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#3b82f6', width: '32px' }}>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#3b82f6', width: '24px', padding: '2px 0 8px 0', lineHeight: '1.3' }}>
                   {index + 1}
                 </span>
                 <div style={{ flexGrow: 1 }}>
                   <p style={{
-                    fontSize: '18px',
+                    fontSize: '15px',
                     fontWeight: '600',
                     color: '#1f2937',
                     margin: '0',
+                    padding: '2px 0 8px 0',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
+                    lineHeight: '1.5',
                   }}>
                     {mapper.mapper}
                   </p>
@@ -437,35 +457,39 @@ export default async function Wrapped() {
 
     {/* Top 5 Songs */}
     {stats.top_5_plays.length > 0 && (
-      <div style={{ marginBottom: '32px' }}>
-        <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#1f2937', marginBottom: '10px', padding: '3px 0 8px 0', lineHeight: '1.4' }}>
           Top Songs
         </h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {stats.top_5_plays.map((play: any, index: number) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#9333ea', width: '32px' }}>
+            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '3px 0 8px 0' }}>
+              <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#9333ea', width: '24px', padding: '2px 0 8px 0', lineHeight: '1.3' }}>
                 {index + 1}
               </span>
               <div style={{ flexGrow: 1 }}>
                 <p style={{
-                  fontSize: '18px',
+                  fontSize: '15px',
                   fontWeight: '600',
                   color: '#1f2937',
                   margin: '0',
+                  padding: '2px 0 6px 0',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
+                  lineHeight: '1.5',
                 }}>
                   {play.title}
                 </p>
                 <p style={{
-                  fontSize: '14px',
+                  fontSize: '13px',
                   color: '#4b5563',
                   margin: '0',
+                  padding: '1px 0 6px 0',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
+                  lineHeight: '1.5',
                 }}>
                   {play.artist}
                 </p>
@@ -480,18 +504,23 @@ export default async function Wrapped() {
     <div style={{
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
-      gap: '24px',
-      paddingTop: '24px',
+      gap: '20px',
+      paddingTop: '15px',
+      marginBottom: '10px',
     }}>
       <div style={{ textAlign: 'center' }}>
-        <p style={{ color: '#4b5563', fontSize: '14px', marginBottom: '4px' }}>Current Rank</p>
-        <p style={{ fontSize: '30px', fontWeight: 'bold', color: '#3b82f6', margin: '0' }}>
+        <p style={{ color: '#4b5563', fontSize: '13px', marginBottom: '2px', padding: '2px 0 6px 0', lineHeight: '1.5' }}>
+          Current Rank
+        </p>
+        <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#3b82f6', margin: '0', padding: '3px 0 10px 0', lineHeight: '1.2' }}>
           #{stats.current_rank?.toLocaleString()}
         </p>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <p style={{ color: '#4b5563', fontSize: '14px', marginBottom: '4px' }}>Total PP</p>
-        <p style={{ fontSize: '30px', fontWeight: 'bold', color: '#6366f1', margin: '0' }}>
+        <p style={{ color: '#4b5563', fontSize: '13px', marginBottom: '2px', padding: '2px 0 6px 0', lineHeight: '1.5' }}>
+          Total PP
+        </p>
+        <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#6366f1', margin: '0', padding: '3px 0 10px 0', lineHeight: '1.2' }}>
           {Math.round(stats.current_pp || 0).toLocaleString()}
         </p>
       </div>
@@ -500,10 +529,13 @@ export default async function Wrapped() {
     {/* Footer */}
     <div style={{
       textAlign: 'center',
-      marginTop: '32px',
-      paddingTop: '24px',
+      marginTop: '10px',
+      paddingTop: '15px',
+      paddingBottom: '15px',
     }}>
-      <p style={{ fontSize: '14px', color: '#6b7280', margin: '0' }}>osu-wrapped.com</p>
+      {/* <p style={{ fontSize: '12px', color: '#6b7280', margin: '0', padding: '3px 0 8px 0', lineHeight: '1.6' }}>
+        osu-wrapped.com *REPLACE WITH WEBSITE NAME*
+      </p> */}
     </div>
   </div>
 </div>
