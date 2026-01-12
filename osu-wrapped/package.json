@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint"
   },
   "dependencies": {
+    "cookies-next": "^4.3.0",
+    "html2canvas": "^1.4.1",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
